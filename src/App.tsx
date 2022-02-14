@@ -11,6 +11,10 @@ const Wrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  @media(max-height:500px) and (min-aspect-ratio: 1/1){
+    flex-direction: row;
+    align-items: center;
+  }
   justify-content: space-between;
 `
 
@@ -18,6 +22,7 @@ const Header = styled.header`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  align-self: flex-start;
 `
 
 

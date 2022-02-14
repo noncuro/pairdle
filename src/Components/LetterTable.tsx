@@ -4,27 +4,24 @@ import {boardColorState, boardState, ColorT, currentWordState, nextMap} from "..
 import {useEffect} from "react";
 
 const Wrapper = styled.div`
-  --table-size: 350px; 
-  width: var(--table-size);
-  height: calc(var(--table-size) / 5 * 6);
+  --table-size: min(350px, 100vw, 60vh);
   margin-left: auto;
   margin-right: auto;
-  align-self: flex-start;
 `
 
 const Table = styled.table`
   min-width: 100%;
-  font-size: 3em;
+  font-size: min(3em, calc(15vw + 1em));
   border-collapse: collapse;
-  width: 100%;
+  //width: 100%;
   empty-cells: show;
   min-height: 100%;
   line-height: 0;
 
 
   & td {
-    width: 20%;
-    height: calc(var(--table-size) / 6)
+    width: calc(var(--table-size) / 5);
+    height: calc(var(--table-size) / 5)
   }
 
   & button {

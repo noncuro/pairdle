@@ -26,7 +26,7 @@ const Letter = styled.div<{ color?: ColorT }>`
   border: inherit;
   color: inherit;
   padding: 0.3em 0.15em;
-  font-size: 1.5em;
+  font-size: min(clamp(1.5em, 5vw, 4em),5vh);
   border-radius: 0.7em;
   width: 2ch;
   text-align: center;
