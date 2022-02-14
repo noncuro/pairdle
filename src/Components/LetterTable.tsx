@@ -9,7 +9,6 @@ const Wrapper = styled.div`
   margin-left: auto;
   margin-right: auto;
   align-self: flex-start;
-  //flex-grow: 1;
 `
 
 const Table = styled.table`
@@ -44,7 +43,6 @@ export const colorCss: Record<ColorT, ReadonlyArray<SimpleInterpolation>> = {
 }
 
 const LetterCell = styled.td<{ color?: ColorT }>`
-  //display: block;
   border: 1px solid grey;
   font-weight: 500;
   ${props => props.color && colorCss[props.color]};
@@ -55,7 +53,6 @@ const LetterButton = styled.button`
   height: 100%;
   width: 100%;
   cursor: pointer;
-  //line-height: 1;
 `
 const NewWordLetter = styled.div`
   cursor: default;

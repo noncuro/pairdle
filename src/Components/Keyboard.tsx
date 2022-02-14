@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
 import {boardColorState, boardState, ColorT, currentWordState, keyboardColor} from "../store";
-import {useEffect, useRef} from "react";
+import {useEffect} from "react";
 import {colorCss} from "./LetterTable";
 
 const letters = ["QWERTYUIOP",
@@ -9,9 +9,7 @@ const letters = ["QWERTYUIOP",
     "ZXCVBNM"]
 
 const Container = styled.div`
-  //position: sticky;
   width: 100%;
-  //bottom: 5px;
   margin-left: auto;
   margin-right: auto;
   justify-self: flex-end;
@@ -33,8 +31,7 @@ const Letter = styled.div<{ color?: ColorT }>`
   border-radius: 0.7em;
   width: 2ch;
   text-align: center;
-  //background-color: hsl(var(--grey-hue-sat), 20%);
-  ${props => props.color && colorCss[props.color]} //pointer-events: none;
+  ${props => props.color && colorCss[props.color]}
   cursor: pointer;
 `
 
@@ -48,13 +45,6 @@ const Enter = styled(Letter)`
   width: 2em;
   background-color: green;
   justify-self: flex-end;
-`
-
-const WordInput = styled.input`
-  //height:5em;
-  font-size: 2em;
-  padding: 0.5em;
-  max-width: 90vw;
 `
 
 const Keyboard = () => {
@@ -81,17 +71,13 @@ const Keyboard = () => {
         setColors(i => [...i, ["Black", "Black", "Black", "Black", "Black"]])
         setWord("")
     }
-    useEffect(() => {
-        // inputRef.current?.focus()
-    }, [word])
-
     return <Container
         tabIndex={-1}
         onKeyDown={e => {
             if (e.key === "Enter") {
                 doEnter();
                 return
-            }//else if(e.key="")
+            }
             if (e.key === "Backspace") {
                 setWord(w => w.slice(0, -1))
                 return

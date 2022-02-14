@@ -1,5 +1,5 @@
-import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
-import {boardColorState, boardState, currentWordState, keyboardColor} from "../store";
+import {useSetRecoilState} from "recoil";
+import {boardColorState, boardState, currentWordState} from "../store";
 import styled from "styled-components";
 
 const StyledButton = styled.button`
