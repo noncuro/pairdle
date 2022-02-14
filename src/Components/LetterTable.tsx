@@ -4,8 +4,9 @@ import {boardColorState, boardState, ColorT, currentWordState, nextMap} from "..
 import {useEffect} from "react";
 
 const Wrapper = styled.div`
-  width: 350px;
-  height: calc(350px / 5 * 6);
+  --table-size: 350px; 
+  width: var(--table-size);
+  height: calc(var(--table-size) / 5 * 6);
   margin-left: auto;
   margin-right: auto;
   align-self: flex-start;
@@ -23,7 +24,7 @@ const Table = styled.table`
 
   & td {
     width: 20%;
-    height: calc(100% / 6)
+    height: calc(var(--table-size) / 6)
   }
 
   & button {

@@ -34,16 +34,17 @@ const Letter = styled.div<{ color?: ColorT }>`
   cursor: pointer;
 `
 
-const Backspace = styled(Letter)`
+const SpecialButton = styled(Letter)<{ disabled: boolean }>`
   width: 2em;
-  background-color: green;
+  background-color: ${props => props.disabled ? "inherit" : "green"};
   justify-self: flex-end;
 `
 
-const Enter = styled(Letter)`
-  width: 2em;
-  background-color: green;
-  justify-self: flex-end;
+const Backspace = styled(SpecialButton)`
+`
+
+const Enter = styled(SpecialButton)`
+    margin-left: 0.5em;
 `
 
 const Keyboard = () => {
@@ -85,23 +86,30 @@ const Keyboard = () => {
                 onLetterClick(e.key.toUpperCase())()
             }
         }}>
-        <Row>{letters[0].split("").map((letter, letteri) =>
+        <Row
+            style={{marginLeft: "2em"}}
+        >{letters[0].split("").map((letter, letteri) =>
             <Letter
                 color={keyboardColorMap[letter]}
                 onClick={onLetterClick(letter)} key={letteri}>{letter}</Letter>)}
-            <Backspace onClick={() => {
-                setWord(w => w.slice(0, -1))
-            }}>←</Backspace>
+            <Backspace
+                disabled={word.length === 0}
+                onClick={() => {
+                    setWord(w => w.slice(0, -1))
+                }}>←</Backspace>
         </Row>
         <Row>{letters[1].split("").map((letter, letteri) =>
             <Letter
                 color={keyboardColorMap[letter]}
                 onClick={onLetterClick(letter)} key={letteri}>{letter}</Letter>)}</Row>
-        <Row>{letters[2].split("").map((letter, letteri) =>
+        <Row
+            style={{marginLeft: "2em"}}
+        >{letters[2].split("").map((letter, letteri) =>
             <Letter
                 color={keyboardColorMap[letter]}
                 onClick={onLetterClick(letter)} key={letteri}>{letter}</Letter>)}
             <Enter
+                disabled={word.length !== 5}
                 onClick={() => {
                     doEnter()
                 }}>⏎</Enter>
