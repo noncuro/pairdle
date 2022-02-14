@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
 import {boardColorState, boardState, ColorT, currentWordState, keyboardColor} from "../store";
-import {useEffect} from "react";
 import {colorCss} from "./LetterTable";
 
 const letters = ["QWERTYUIOP",
