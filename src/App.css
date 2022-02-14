@@ -1,5 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300..900&display=swap');
+
+
 .App {
   text-align: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .App-logo {
@@ -35,4 +42,11 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+body{
+  --grey-hue-sat: 258, 8%;
+  background-color: hsla(var(--grey-hue-sat), 30%, 0.8);
+  color:white;
+  font-family: "Rubik", sans-serif;
 }
