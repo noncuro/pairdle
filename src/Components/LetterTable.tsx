@@ -3,12 +3,35 @@ import {useRecoilState, useRecoilValue} from "recoil";
 import {boardColorState, boardState, ColorT, currentWordState, nextMap} from "../store";
 import {useEffect} from "react";
 
-const Table = styled.table`
-  min-width: 400px;
+const Wrapper = styled.div`
+  width: 350px;
+  height: calc(350px / 5 * 6);
   margin-left: auto;
   margin-right: auto;
+  align-self: flex-start;
+  //flex-grow: 1;
+`
+
+const Table = styled.table`
+  min-width: 100%;
   font-size: 3em;
   border-collapse: collapse;
+  width: 100%;
+  empty-cells: show;
+  min-height: 100%;
+  line-height: 0;
+
+
+  & td {
+    width: 20%;
+    height: calc(100% / 6)
+  }
+
+  & button {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
 `
 
 export const colorCss: Record<ColorT, ReadonlyArray<SimpleInterpolation>> = {
@@ -20,12 +43,27 @@ export const colorCss: Record<ColorT, ReadonlyArray<SimpleInterpolation>> = {
     "Green": css`background-color: hsl(120, 88%, 30%);`,
 }
 
-const Letter = styled.td<{ color?: ColorT }>`
+const LetterCell = styled.td<{ color?: ColorT }>`
+  //display: block;
   border: 1px solid grey;
   font-weight: 500;
-  width: 20%;
   ${props => props.color && colorCss[props.color]};
 `
+
+const LetterButton = styled.button`
+  display: block;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+  //line-height: 1;
+`
+const NewWordLetter = styled.div`
+  cursor: default;
+`
+
+const EmptyCell = () => {
+    return <LetterCell/>
+}
 
 const LetterTable = () => {
     const word = useRecoilValue(currentWordState)
@@ -53,17 +91,36 @@ const LetterTable = () => {
             return c
         })
     }
-    return <Table>
-        {board.map((w, rowi) =>
-            <tr>{w.split("").map((l, coli) =>
-                <Letter onClick={toggleLetterColor(rowi, coli)}
+
+    const numEmptyRows = 6 - board.length - (word ? 1 : 0)
+
+    return <Wrapper>
+        <Table>
+            <tbody>
+            {board.map((w, rowi) =>
+                <tr key={rowi}>{w.split("").map((l, coli) =>
+                    <LetterCell
                         key={coli}
                         color={colors[rowi][coli]}
-                >{l}</Letter>)}</tr>)}
+                    ><LetterButton onClick={toggleLetterColor(rowi, coli)}
 
-        {word && word.split("").map((l, i) =>
-            <Letter
-                key={i}>{l}</Letter>)}
-    </Table>
+                    >{l}</LetterButton></LetterCell>)}</tr>)}
+
+            {word && <tr key={"word"}>{
+                word.split("").map((l, i) =>
+                    <LetterCell
+                        key={i}
+                        onClick={() => alert("Press enter first")}><NewWordLetter
+
+                    >{l}</NewWordLetter></LetterCell>)
+            }{Array(5 - word.length).fill(undefined).map((i, n) => {
+                return <EmptyCell key={n}/>
+            })}</tr>}
+            {Array(numEmptyRows).fill(undefined).map((i, n) => {
+                return <tr key={n}><EmptyCell/><EmptyCell/><EmptyCell/><EmptyCell/><EmptyCell/></tr>
+            })}
+            </tbody>
+        </Table>
+    </Wrapper>
 }
 export default LetterTable
