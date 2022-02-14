@@ -12,3 +12,7 @@ That's about it.
 ## Live Demo
 
 [https://pairdle.web.app](https://pairdle.web.app)
+
+## Screenshot
+
+![Screenshot](screenshot1.png)
