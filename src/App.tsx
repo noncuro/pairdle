@@ -19,6 +19,7 @@ const Wrapper = styled.div`
 `
 
 const Header = styled.header`
+  padding: 2px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;

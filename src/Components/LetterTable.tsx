@@ -4,7 +4,7 @@ import {boardColorState, boardState, ColorT, currentWordState, nextMap} from "..
 import {useEffect} from "react";
 
 const Wrapper = styled.div`
-  --table-size: min(350px, 100vw, 60vh);
+  --table-size: min(300px, 100vw, 60vh);
   margin-left: auto;
   margin-right: auto;
 `
