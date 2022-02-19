@@ -15,4 +15,4 @@ That's about it.
 
 ## Screenshot
 
-![Screenshot](screenshot1.png)
+![Screenshot](public/screenshot1.png)
