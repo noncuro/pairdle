@@ -98,14 +98,16 @@ const LetterTable = () => {
     }
 
     const lastRowEmptyCells = useMemo(() => repeat(5 - word.length, (n) => {
-        return <EmptyCell key={n}/>
+        return <EmptyCell data-testid={`empty-cell-${n}`} key={n}/>
     }), [word.length])
 
 
     const emptyRows = useMemo(() => {
         const numEmptyRows = 6 - board.length - (word ? 1 : 0)
         return repeat(numEmptyRows, (i) => {
-            return repeat(5, (j) => <EmptyCell key={`${i} ${j}`}/>)
+            return repeat(5, (j) => <EmptyCell
+                data-testid={`letter-cell-empty-${i}-${j}`}
+                key={`${i} ${j}`}/>)
         })
     }, [board.length, word])
 
@@ -114,12 +116,14 @@ const LetterTable = () => {
             {board.map((w, rowi) =>
                 w.split("").flatMap((l, coli) =>
                     <LetterCell
+                        data-testid={`letter-cell-${rowi}-${coli}`}
                         key={`${rowi} ${coli}`}
                         color={colors[rowi][coli]}>
                         <LetterButton onClick={toggleLetterColor(rowi, coli)}>{l}</LetterButton>
                     </LetterCell>))}
             {!!word && word.split("").map((l, i) =>
                 <LetterCell
+                    data-testid={`letter-cell-new-${i}`}
                     key={i}
                     onClick={() => alert("Press enter first")}><NewWordLetter
 

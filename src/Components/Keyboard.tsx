@@ -87,24 +87,29 @@ const Keyboard = ({doEnter, doBackspace, doClickLetter}: Actions) => {
         <Row
         >{letters[0].split("").map((letter, letteri) =>
             <Letter
+                data-testid={letter}
                 color={keyboardColorMap[letter]}
                 onClick={doClickLetter(letter)} key={letteri}>{letter}</Letter>)}
         </Row>
         <Row
         ><HalfSpace/>{letters[1].split("").map((letter, letteri) =>
             <Letter
+                data-testid={letter}
                 color={keyboardColorMap[letter]}
                 onClick={doClickLetter(letter)} key={letteri}>{letter}</Letter>)}<HalfSpace/></Row>
         <Row
 
         ><Backspace
             disabled={false}
+            data-testid={"backspace"}
             onClick={doBackspace}>←</Backspace>
             {letters[2].split("").map((letter, letteri) =>
                 <Letter
+                    data-testid={letter}
                     color={keyboardColorMap[letter]}
                     onClick={doClickLetter(letter)} key={letteri}>{letter}</Letter>)}
             <Enter
+                data-testid={"enter"}
                 disabled={word.length !== 5}
                 onClick={() => {
                     doEnter()
