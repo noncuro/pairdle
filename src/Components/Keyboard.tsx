@@ -3,7 +3,6 @@ import {useRecoilValue} from "recoil";
 import {ColorT, currentWordState, keyboardColor} from "../store";
 import {colorCss} from "./LetterTable";
 import React from "react";
-import {useActions} from "../actions";
 
 const letters = ["QWERTYUIOP",
     "ASDFGHJKL",
