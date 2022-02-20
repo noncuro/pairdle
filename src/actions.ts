@@ -25,6 +25,8 @@ export const useActions = (): {
             setWord(w => w.slice(0, -1))
             return true
         }
+        if (!window.confirm("Do you want to undo the last word?"))
+            return false
         const lastWord = await new Promise<string | undefined>((resolve) => setBoard(b => {
             resolve(b.at(-1))
             return b.slice(0, -1)
