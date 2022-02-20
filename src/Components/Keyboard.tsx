@@ -25,6 +25,12 @@ const Row = styled.div`
 const Letter = styled.button<{ color?: ColorT }>`
   //border: inherit;
   flex: 1;
+  transition: transform 100ms;
+
+  :active {
+    transform: scale(0.8);
+  }
+
   line-height: 1;
   //height: 2em;
   background-color: inherit;
@@ -49,6 +55,7 @@ const SpecialButton = styled(Letter)<{ disabled: boolean }>`
   line-height: 0;
   margin-left: 0.25em;
   flex: 1.5;
+  pointer-events: none;
   ${props => props.disabled ? css`
     color: hsla(var(--grey-hue-sat), 60%);
   ` : css`
@@ -91,7 +98,7 @@ const Keyboard = ({doEnter, doBackspace, doClickLetter}: Actions) => {
         <Row
 
         ><Backspace
-            disabled={word.length === 0}
+            disabled={false}
             onClick={doBackspace}>←</Backspace>
             {letters[2].split("").map((letter, letteri) =>
                 <Letter
