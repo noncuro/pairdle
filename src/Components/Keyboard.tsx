@@ -25,6 +25,7 @@ const Row = styled.div`
 const Letter = styled.button<{ color?: ColorT }>`
   //border: inherit;
   flex: 1;
+  user-select: none;
   transition: transform 100ms;
 
   :active {
@@ -54,8 +55,7 @@ const SpecialButton = styled(Letter)<{ disabled: boolean }>`
   font-size: 3em;
   line-height: 0;
   margin-left: 0.25em;
-  flex: 1.5;
-  pointer-events: none;
+  flex: 1.5; 
   ${props => props.disabled ? css`
     color: hsla(var(--grey-hue-sat), 60%);
   ` : css`
