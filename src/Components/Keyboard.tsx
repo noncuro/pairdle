@@ -62,6 +62,9 @@ interface Actions{
     doClickLetter: (letter: string) => () => void
 }
 
+const rowMargins = [
+    "1.6em", "-1.9em", "2.2em"
+]
 
 const Keyboard = ({doEnter, doBackspace, doClickLetter}:Actions) => {
     const word = useRecoilValue(currentWordState)
@@ -69,7 +72,7 @@ const Keyboard = ({doEnter, doBackspace, doClickLetter}:Actions) => {
 
     return <Container>
         <Row
-            style={{marginLeft: "3em"}}
+            style={{marginLeft: rowMargins[0]}}
         >{letters[0].split("").map((letter, letteri) =>
             <Letter
                 color={keyboardColorMap[letter]}
@@ -78,12 +81,14 @@ const Keyboard = ({doEnter, doBackspace, doClickLetter}:Actions) => {
                 disabled={word.length === 0}
                 onClick={doBackspace}>←</Backspace>
         </Row>
-        <Row>{letters[1].split("").map((letter, letteri) =>
+        <Row
+            style={{marginLeft: rowMargins[1]}}
+        >{letters[1].split("").map((letter, letteri) =>
             <Letter
                 color={keyboardColorMap[letter]}
                 onClick={doClickLetter(letter)} key={letteri}>{letter}</Letter>)}</Row>
         <Row
-            style={{marginLeft: "5em"}}
+            style={{marginLeft: rowMargins[2]}}
         >{letters[2].split("").map((letter, letteri) =>
             <Letter
                 color={keyboardColorMap[letter]}
