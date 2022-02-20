@@ -71,8 +71,19 @@ button {
 }
 
 body {
+    height: 99%; /* Weird vertical scrollbar issue on mobile */
     --grey-hue-sat: 258, 8%;
-    background-color: hsla(var(--grey-hue-sat), 30%);
-    color: white;
+    --theme-darkened: hsla(var(--grey-hue-sat), 30%, 100%);
+
+    background-color: hsla(var(--grey-hue-sat), 10%);
+    color: hsl(var(--grey-hue-sat), 90%);
     font-family: "Rubik", sans-serif;
+}
+
+@media (prefers-color-scheme: light) {
+    body {
+        --theme-darkened: hsl(var(--grey-hue-sat), 60%);
+        background-color: hsla(var(--grey-hue-sat), 90%);
+        color: hsl(var(--grey-hue-sat), 10%);
+    }
 }

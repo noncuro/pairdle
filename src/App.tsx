@@ -39,7 +39,6 @@ function App() {
             return
         }
         if (key === "Backspace") {
-            console.log("backspace")
             doBackspace()
             return
         }

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 import {useRecoilValue} from "recoil";
 import {ColorT, currentWordState, keyboardColor} from "../store";
 import {colorCss} from "./LetterTable";
@@ -22,8 +22,9 @@ const Row = styled.div`
   gap: 2px;
   padding: 1px 0;
 `
-const Letter = styled.div<{ color?: ColorT }>`
+const Letter = styled.button<{ color?: ColorT }>`
   //border: inherit;
+  flex: 1;
   line-height: 1;
   //height: 2em;
   background-color: inherit;
@@ -41,12 +42,18 @@ const Letter = styled.div<{ color?: ColorT }>`
 `
 
 const SpecialButton = styled(Letter)<{ disabled: boolean }>`
+  box-sizing: content-box;
   width: 1.3em;
-  background-color: ${props => props.disabled ? "inherit" : "hsl(from green h, 1%, 1%)"};
   justify-self: flex-end;
   font-size: 3em;
   line-height: 0;
   margin-left: 0.25em;
+  flex: 1.5;
+  ${props => props.disabled ? css`
+    color: hsla(var(--grey-hue-sat), 60%);
+  ` : css`
+    color: inherit  `};
+
 `
 
 const Backspace = styled(SpecialButton)`
@@ -55,43 +62,41 @@ const Backspace = styled(SpecialButton)`
 const Enter = styled(SpecialButton)`
 `
 
-interface Actions{
+const HalfSpace = styled.div`
+  flex: 0.5;
+`
+
+interface Actions {
     doEnter: () => (boolean);
     doBackspace: () => void;
     doClickLetter: (letter: string) => () => void
 }
 
-const rowMargins = [
-    "1.6em", "-1.9em", "2.2em"
-]
-
-const Keyboard = ({doEnter, doBackspace, doClickLetter}:Actions) => {
+const Keyboard = ({doEnter, doBackspace, doClickLetter}: Actions) => {
     const word = useRecoilValue(currentWordState)
     const keyboardColorMap = useRecoilValue(keyboardColor)
 
     return <Container>
         <Row
-            style={{marginLeft: rowMargins[0]}}
         >{letters[0].split("").map((letter, letteri) =>
             <Letter
                 color={keyboardColorMap[letter]}
                 onClick={doClickLetter(letter)} key={letteri}>{letter}</Letter>)}
-            <Backspace
-                disabled={word.length === 0}
-                onClick={doBackspace}>←</Backspace>
         </Row>
         <Row
-            style={{marginLeft: rowMargins[1]}}
-        >{letters[1].split("").map((letter, letteri) =>
+        ><HalfSpace/>{letters[1].split("").map((letter, letteri) =>
             <Letter
                 color={keyboardColorMap[letter]}
-                onClick={doClickLetter(letter)} key={letteri}>{letter}</Letter>)}</Row>
+                onClick={doClickLetter(letter)} key={letteri}>{letter}</Letter>)}<HalfSpace/></Row>
         <Row
-            style={{marginLeft: rowMargins[2]}}
-        >{letters[2].split("").map((letter, letteri) =>
-            <Letter
-                color={keyboardColorMap[letter]}
-                onClick={doClickLetter(letter)} key={letteri}>{letter}</Letter>)}
+
+        ><Backspace
+            disabled={word.length === 0}
+            onClick={doBackspace}>←</Backspace>
+            {letters[2].split("").map((letter, letteri) =>
+                <Letter
+                    color={keyboardColorMap[letter]}
+                    onClick={doClickLetter(letter)} key={letteri}>{letter}</Letter>)}
             <Enter
                 disabled={word.length !== 5}
                 onClick={() => {
