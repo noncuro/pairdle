@@ -12,7 +12,7 @@ const Wrapper = styled.div`
 const Table = styled.table`
   min-width: 100%;
   font-size: min(3em, calc(15vw + 1em));
-  border-collapse: collapse;
+  border-collapse: separate;
   //width: 100%;
   empty-cells: show;
   min-height: 100%;
@@ -22,7 +22,7 @@ const Table = styled.table`
   & td {
     width: calc(var(--table-size) / 5);
     height: calc(var(--table-size) / 5)
-  }
+  } 
 
   & button {
     display: block;
