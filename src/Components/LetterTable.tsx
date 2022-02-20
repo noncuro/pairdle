@@ -1,7 +1,7 @@
 import styled, {css, SimpleInterpolation} from "styled-components";
 import {useRecoilState, useRecoilValue} from "recoil";
 import {boardColorState, boardState, ColorT, currentWordState, nextMap} from "../store";
-import {useEffect} from "react";
+import {useEffect, useMemo} from "react";
 
 const Wrapper = styled.div`
   --table-size: min(300px, 100vw, 60vh);
@@ -60,11 +60,14 @@ const EmptyCell = () => {
     return <LetterCell/>
 }
 
+const repeat = <T extends any>(n: number, f: (i: number) => T): T[] => {
+    return Array(n).fill(undefined).map((i, j) => f(j))
+};
+
 const LetterTable = () => {
     const word = useRecoilValue(currentWordState)
     const [colors, setColors] = useRecoilState(boardColorState)
     const board = useRecoilValue(boardState)
-
 
     useEffect(() => {
         localStorage.setItem("word", word)
@@ -87,34 +90,38 @@ const LetterTable = () => {
         })
     }
 
-    const numEmptyRows = 6 - board.length - (word ? 1 : 0)
+    const lastRowEmptyCells = useMemo(() => repeat(5 - word.length, (n) => {
+        return <EmptyCell key={n}/>
+    }), [word.length])
+
+
+    const emptyRows = useMemo(() => {
+        const numEmptyRows = 6 - board.length - (word ? 1 : 0)
+        return repeat(numEmptyRows, (i) => {
+            return <tr key={i}>
+                {repeat(5, (j) => <EmptyCell key={`${i} ${j}`}/>)}
+            </tr>
+        })
+    }, [board.length, word])
+
 
     return <Wrapper>
         <Table>
-            <tbody>
-            {board.map((w, rowi) =>
+            <tbody>{board.map((w, rowi) =>
                 <tr key={rowi}>{w.split("").map((l, coli) =>
                     <LetterCell
                         key={coli}
-                        color={colors[rowi][coli]}
-                    ><LetterButton onClick={toggleLetterColor(rowi, coli)}
+                        color={colors[rowi][coli]}>
+                        <LetterButton onClick={toggleLetterColor(rowi, coli)}>{l}</LetterButton>
+                    </LetterCell>)}</tr>)}
+            {!!word && <tr key={"word"}>{word.split("").map((l, i) =>
+                <LetterCell
+                    key={i}
+                    onClick={() => alert("Press enter first")}><NewWordLetter
 
-                    >{l}</LetterButton></LetterCell>)}</tr>)}
-
-            {word && <tr key={"word"}>{
-                word.split("").map((l, i) =>
-                    <LetterCell
-                        key={i}
-                        onClick={() => alert("Press enter first")}><NewWordLetter
-
-                    >{l}</NewWordLetter></LetterCell>)
-            }{Array(5 - word.length).fill(undefined).map((i, n) => {
-                return <EmptyCell key={n}/>
-            })}</tr>}
-            {Array(numEmptyRows).fill(undefined).map((i, n) => {
-                return <tr key={n}><EmptyCell/><EmptyCell/><EmptyCell/><EmptyCell/><EmptyCell/></tr>
-            })}
-            </tbody>
+                >{l}</NewWordLetter></LetterCell>)}
+                {lastRowEmptyCells}</tr>}
+            {emptyRows}</tbody>
         </Table>
     </Wrapper>
 }
