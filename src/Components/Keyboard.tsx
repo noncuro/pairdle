@@ -42,31 +42,34 @@ const Letter = styled.div<{ color?: ColorT }>`
 `
 
 const SpecialButton = styled(Letter)<{ disabled: boolean }>`
-  width: 2em;
-  background-color: ${props => props.disabled ? "inherit" : "green"};
+  width: 1.3em;
+  background-color: ${props => props.disabled ? "inherit" : "hsl(from green h, 1%, 1%)"};
   justify-self: flex-end;
   font-size: 3em;
   line-height: 0;
-  border: 1px solid white;
+  margin-left: 0.25em;
 `
 
 const Backspace = styled(SpecialButton)`
 `
 
 const Enter = styled(SpecialButton)`
-  margin-left: 0.5em;
 `
 
+interface Actions{
+    doEnter: () => (boolean);
+    doBackspace: () => void;
+    doClickLetter: (letter: string) => () => void
+}
 
-const Keyboard = () => {
+
+const Keyboard = ({doEnter, doBackspace, doClickLetter}:Actions) => {
     const word = useRecoilValue(currentWordState)
     const keyboardColorMap = useRecoilValue(keyboardColor)
 
-    const {doEnter, doBackspace, doClickLetter} = useActions()
-
     return <Container>
         <Row
-            style={{marginLeft: "2em"}}
+            style={{marginLeft: "3em"}}
         >{letters[0].split("").map((letter, letteri) =>
             <Letter
                 color={keyboardColorMap[letter]}
@@ -80,7 +83,7 @@ const Keyboard = () => {
                 color={keyboardColorMap[letter]}
                 onClick={doClickLetter(letter)} key={letteri}>{letter}</Letter>)}</Row>
         <Row
-            style={{marginLeft: "2em"}}
+            style={{marginLeft: "5em"}}
         >{letters[2].split("").map((letter, letteri) =>
             <Letter
                 color={keyboardColorMap[letter]}

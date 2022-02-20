@@ -39,6 +39,7 @@ function App() {
             return
         }
         if (key === "Backspace") {
+            console.log("backspace")
             doBackspace()
             return
         }
@@ -50,14 +51,14 @@ function App() {
 
     return (
         <Wrapper tabIndex={-1}
-                 onKeyPress={(e) => {
+                 onKeyDown={(e) => {
                      onKeyDown(e.key)
                  }}>
             <Header>
                 <ResetButton/>
             </Header>
             <LetterTable/>
-            <Keyboard/>
+            <Keyboard doEnter={doEnter} doBackspace={doBackspace} doClickLetter={doClickLetter}/>
         </Wrapper>
     );
 }
